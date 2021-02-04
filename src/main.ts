@@ -107,7 +107,9 @@ async function fetchPolylines (): Promise<FeatureSet<Polyline>> {
 }
 
 async function main(): Promise<void> {
-  const server = new StreamServer({ port: 8000, maxBufferredAmount: 256 });
+  const PORT = parseInt(process.env["PORT"], 10);
+
+  const server = new StreamServer({ port: PORT, maxBufferredAmount: 256 });
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -123,14 +125,14 @@ async function main(): Promise<void> {
     server.broadcast(message);
   }, BROADCAST_INTERVAL);
 
-  console.log("Started listening on port 8000");
+  console.log(`Started listening on port ${PORT}`);
 
-  rl.question("Press ENTER to stop server", (_response: string) => {
-    console.log("Closing Server...")
-    clearInterval(intervalId);
-    server.close();
-    rl.close();
-  })
+  // rl.question("Press ENTER to stop server", (_response: string) => {
+  //   console.log("Closing Server...")
+  //   clearInterval(intervalId);
+  //   server.close();
+  //   rl.close();
+  // })
 }
 
 
