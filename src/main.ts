@@ -110,6 +110,7 @@ class StreamServer extends Server {
 function fetchPolylines(): Promise<FeatureSet<Polyline>> {
   return new Promise((resolve) => {
     readFile("../data/usda-polylines.json", { encoding: "utf-8" }, (err, data) => {
+      if (err) throw err;
       const json = JSON.parse(data);
       resolve(json as FeatureSet<Polyline>);
     });
